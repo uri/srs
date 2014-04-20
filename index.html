@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <title>Uri is the best</title>
+    
+    <link rel="stylesheet" href="./components/bootstrap/dist/css/bootstrap.css" type="text/css" media="screen" charset="utf-8">
+    
+  </head>
+  <body ng-app="UriGorelik">
+    
+    <div ng-controller="MainCtrl" class="container">
+      
+      <div class="jumbotron">
+        <h1>SRS <small>space retention system</small></h1>
+      </div>
+      
+      <div class="page-header">
+        <h1>{{lastestNote.title}}</h1>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="card" ng-repeat="card in cards">
+          <h3 class="title">{{card.title}}</h3>
+          <p>{{card.body}}</p>
+          <hr>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <form ng-submit="addCard()">
+          <label class="control-label">Title</label>
+          <input type="text" class="form-control" ng-model="newCard.title"><br>
+          <label class="control-label">Body</label>
+          <textarea rows="10" class="form-control" cols="40" ng-model="newCard.body"></textarea><br>
+          <label class="control-label">Tags</label>
+          <input type="text" class="form-control" ng-model="newCard.tags"><br>
+          <button class="form-control btn btn-primary">
+            add card
+          </button>
+        </form>
+      </div>
+      
+    </div>
+    
+    <footer>
+      <div class="container">
+        <hr>
+        <h3>Contact or something?</h3>
+      </div>
+    </footer>
+  
+  
+  <!--  JS    -->
+  <script type="text/javascript" charset="utf-8" src="./components/marked/lib/marked.js"></script>  
+  <script type="text/javascript" charset="utf-8" src="./components/angular/angular.min.js"></script>  
+  <script type="text/javascript" charset="utf-8">
+    
+    angular.module("Marked", []).factory("marked", ["$window", function () {
+      return $window.marked;
+    }])
+    
+    var app = angular.module("UriGorelik", ["Marked"]);
+    app.controller("MainCtrl", ["$scope", function ($scope) {
+      $scope.cards = [];
+      $scope.newCard = {};
+      
+      $scope.addCard = function () {
+        $scope.cards.unshift(angular.copy($scope.newCard));
+        $scope.newCard = {};
+      }
+    }]);
+  </script>
+  
+  </body>
+</html>
